@@ -18,6 +18,14 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _livesImage;
     [SerializeField]
+    private Slider _ammoSlider;
+    [SerializeField]
+    private Text _ammoText;
+    [SerializeField]
+    private Text _ammoTextShadow;
+    [SerializeField]
+    private GameObject[] _shieldObjects;
+    [SerializeField]
     private Sprite[] _liveSprites;
     private GameManager _gameManager;
 
@@ -26,6 +34,14 @@ public class UIManager : MonoBehaviour
         _playerScore.text = "Score: 0";
         _gameOver.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
+        _ammoSlider.GetComponent<Slider>();
+        if (_ammoSlider == null)
+        {
+            Debug.LogError("Ammo Slider Not Found");
+        }
+        _ammoSlider.value = 15;
+        _ammoText.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
+        _ammoTextShadow.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
         _pauseText.gameObject.SetActive(false);
         _pauseTextInfo.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -33,6 +49,24 @@ public class UIManager : MonoBehaviour
         {
             Debug.LogError("Game Manager Not Found");
         }
+    }
+
+    public bool UpdateAmmo()
+    {
+        bool canFire = true;
+        _ammoSlider.value -= 1;
+        if (_ammoSlider.value > 0)
+        {
+            canFire = true;
+        }
+        else
+        {
+            _ammoSlider.value = 0;
+            canFire = false;
+        }
+        _ammoText.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
+        _ammoTextShadow.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
+        return canFire;
     }
 
     public void UpdateScore(int score)

@@ -86,25 +86,28 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
-            _canFire = Time.time + _fireRate;
-            _audioSource.clip = _laserSound;
-            if (_canTripleShot)
+            if (_uiManager.UpdateAmmo())
             {
-                Vector3 laser = new Vector3(transform.position.x + 1.3f, transform.position.y + _laserOffset, 0);
-                Instantiate(_tripleLaserPrefab, laser, Quaternion.identity);
-                _audioSource.Play();
-            } 
-            else if (_canSuperWeapon)
-            {
-                Vector3 super = new Vector3(transform.position.x, transform.position.y, 0);
-                Instantiate(_superWeaponPrefab, super, Quaternion.identity);
-                _canSuperWeapon = false;
-            }
-            else
-            {
-                Vector3 laser = new Vector3(transform.position.x, transform.position.y + _laserOffset, 0);
-                Instantiate(_laserPrefab, laser, Quaternion.identity);
-                _audioSource.Play();
+                _canFire = Time.time + _fireRate;
+                _audioSource.clip = _laserSound;
+                if (_canTripleShot)
+                {
+                    Vector3 laser = new Vector3(transform.position.x + 1.3f, transform.position.y + _laserOffset, 0);
+                    Instantiate(_tripleLaserPrefab, laser, Quaternion.identity);
+                    _audioSource.Play();
+                } 
+                else if (_canSuperWeapon)
+                {
+                    Vector3 super = new Vector3(transform.position.x, transform.position.y, 0);
+                    Instantiate(_superWeaponPrefab, super, Quaternion.identity);
+                    _canSuperWeapon = false;
+                }
+                else
+                {
+                    Vector3 laser = new Vector3(transform.position.x, transform.position.y + _laserOffset, 0);
+                    Instantiate(_laserPrefab, laser, Quaternion.identity);
+                    _audioSource.Play();
+                }
             }
         }
     }

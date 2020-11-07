@@ -18,7 +18,7 @@ public class SpawnManager : MonoBehaviour
 
     private bool _stopSpawning = false;
      
-    public void startSpawning()
+    public void StartSpawning()
     {
         StartCoroutine(SpawnEnemy());
         StartCoroutine(SpawnPowerUp());
