@@ -1882,6 +1882,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _lives: 3
+  _isImmortal: 0
   _score: 0
   _speed: 3.5
   _speedMultiplier: 2
@@ -1891,6 +1892,7 @@ MonoBehaviour:
   _powerupSound: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
   _explodeSound: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
   _tripleLaserPrefab: {fileID: 3793052180006450981, guid: 62391eb3817be9f4eb005e874d374a1b, type: 3}
+  _superWeaponPrefab: {fileID: 0}
   _playerHurt:
   - {fileID: 168804510}
   - {fileID: 1513822297}
@@ -2258,6 +2260,7 @@ MonoBehaviour:
   - {fileID: 4033161612437761825, guid: 28523c0be1aeac74583a2d2009261ad4, type: 3}
   - {fileID: 2582158114996595380, guid: b0fb0fffa298d104e82f0ca950880f83, type: 3}
   - {fileID: 2582158114996595380, guid: ab892bb9b59dad04fa3a00e3b1d5ca5d, type: 3}
+  - {fileID: 2554897147139202770, guid: 8ba9ef5ec79ea2142bc5aa974b6a190c, type: 3}
 --- !u!4 &1895205860
 Transform:
   m_ObjectHideFlags: 0
