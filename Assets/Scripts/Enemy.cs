@@ -95,6 +95,15 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             Destroy(GetComponent<Collider2D>());
             Destroy(this.gameObject, 2.8f);
-        } 
+        }
+        if (other.CompareTag("SuperWeapon"))
+        {
+            _player.SetScore(10);
+            _speed = 0;
+            _animator.SetTrigger("onEnemyDeath");
+            _audioSource.Play();
+            Destroy(GetComponent<Collider2D>());
+            Destroy(this.gameObject, 2.8f);
+        }
     }
 }

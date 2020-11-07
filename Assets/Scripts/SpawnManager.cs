@@ -32,7 +32,7 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(Random.Range(3, 8));
             float randomX = Random.Range(-8f, 8f);
             Vector3 location = new Vector3(randomX, 7f, 0);
-            int list = Random.Range(0, 3);
+            int list = Random.Range(0, 4);
             GameObject newPowerUp = Instantiate(_powerUps[list], location, Quaternion.identity);
             newPowerUp.transform.parent = _powerContainer.transform;
         }

@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private int _lives = 3;
     [SerializeField]
+    private bool _isImmortal; //for testing purposes ;)
+    [SerializeField]
     private int _score = 0;
     private float _canFire = -1f;
     [SerializeField]
@@ -31,7 +33,10 @@ public class Player : MonoBehaviour
     private float _fireRate = 0.15f;
     [SerializeField]
     private GameObject _tripleLaserPrefab;
+    [SerializeField]
+    private GameObject _superWeaponPrefab;
     private bool _canTripleShot = false;
+    private bool _canSuperWeapon = false;
     private bool _isShieldActive = false;
 
     [SerializeField]
@@ -82,6 +87,12 @@ public class Player : MonoBehaviour
                 Instantiate(_tripleLaserPrefab, laser, Quaternion.identity);
                 _audioSource.Play();
             } 
+            else if (_canSuperWeapon)
+            {
+                Vector3 super = new Vector3(transform.position.x, transform.position.y, 0);
+                Instantiate(_superWeaponPrefab, super, Quaternion.identity);
+                _canSuperWeapon = false;
+            }
             else
             {
                 Vector3 laser = new Vector3(transform.position.x, transform.position.y + _laserOffset, 0);
@@ -105,6 +116,14 @@ public class Player : MonoBehaviour
         StartCoroutine(TripleShotPowerDown());
     }
 
+    public void SuperActive()
+    {
+        _audioSource.clip = _powerupSound;
+        _audioSource.Play();
+        _canSuperWeapon = true;
+        StartCoroutine(SuperWeaponPowerDown());
+    }
+
     public void ShieldActive()
     {
         _audioSource.clip = _powerupSound;
@@ -119,6 +138,11 @@ public class Player : MonoBehaviour
         _audioSource.Play();
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedPowerDown());
+    }
+    private IEnumerator SuperWeaponPowerDown()
+    {
+        yield return new WaitForSeconds(5f);
+        _canSuperWeapon = false;
     }
 
     private IEnumerator TripleShotPowerDown()
@@ -140,9 +164,12 @@ public class Player : MonoBehaviour
             _shieldObject.SetActive(false);
             return;
         }
-        _lives--;
-        _uiManager.UpdateLives(_lives);
-        _audioSource.clip = _explodeSound;
+        if (!_isImmortal)
+        {
+            _lives--;
+            _uiManager.UpdateLives(_lives);
+            _audioSource.clip = _explodeSound;
+        }
         switch (_lives)
         {
             case 0:

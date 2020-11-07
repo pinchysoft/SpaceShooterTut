@@ -7,7 +7,7 @@ public class PowerUp : MonoBehaviour
 
     [SerializeField]
     private float _speed = 3f;
-    [SerializeField] //0 = Triple Shot; 1 = Speed; 2 = Shield
+    [SerializeField] //0 = Triple Shot; 1 = Speed; 2 = Shield; 3 = Super Weapon
     private float _powerID;
 
     void Update()
@@ -36,6 +36,9 @@ public class PowerUp : MonoBehaviour
                         break;
                     case 2:
                         player.ShieldActive();
+                        break;
+                    case 3:
+                        player.SuperActive();
                         break;
                     default:
                         Debug.LogError("Power Up ID Not Found");
