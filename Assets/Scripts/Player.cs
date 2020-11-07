@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     private int _speedMultiplier = 2;
     private AudioSource _audioSource;
     private Animator _animator;
+    private CameraShake _cameraShake;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
         _animator = GetComponent<Animator>();
+        _cameraShake = GameObject.Find("Main Camera").GetComponent<CameraShake>();
 
         if (_spawnManager == null)
         {
@@ -67,6 +69,11 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Audio Source (Player) Not Found");
         }
+        if (_audioSource == null)
+        {
+            Debug.LogError("Main Camera Not Found");
+        }
+
     }
 
     void Update()
@@ -166,6 +173,7 @@ public class Player : MonoBehaviour
         }
         if (!_isImmortal)
         {
+            _cameraShake.Shake();
             _lives--;
             _uiManager.UpdateLives(_lives);
             _audioSource.clip = _explodeSound;

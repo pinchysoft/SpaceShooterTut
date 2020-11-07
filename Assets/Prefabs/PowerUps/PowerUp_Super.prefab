@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8793056370286556865}
   - component: {fileID: 3215284643312558214}
   - component: {fileID: 5412220523016038975}
-  - component: {fileID: 2581826322175018096}
+  - component: {fileID: 4484503737393062134}
   m_Layer: 0
   m_Name: PowerUp_Super
   m_TagString: Untagged
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _powerID: 3
---- !u!95 &2581826322175018096
+--- !u!95 &4484503737393062134
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
