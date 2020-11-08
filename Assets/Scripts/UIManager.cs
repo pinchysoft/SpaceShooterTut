@@ -29,11 +29,25 @@ public class UIManager : MonoBehaviour
     private Sprite[] _liveSprites;
     private GameManager _gameManager;
 
+    [SerializeField]
+    private Slider _thrusterSlider;
+    [SerializeField]
+    private Text _thrusterText;
+    [SerializeField]
+    private Text _thrusterTextShadow;
+    [SerializeField]
+    private Image _thrusterBar;
+
+    private float _thrustersCost = 0.2f;
+    private float _thrustersRegen = 0.1f;
+    private int _thrustersMax = 100;
+
     void Start()
     {
         _playerScore.text = "Score: 0";
         _gameOver.gameObject.SetActive(false);
         _restartText.gameObject.SetActive(false);
+
         _ammoSlider.GetComponent<Slider>();
         if (_ammoSlider == null)
         {
@@ -42,6 +56,22 @@ public class UIManager : MonoBehaviour
         _ammoSlider.value = 15;
         _ammoText.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
         _ammoTextShadow.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
+
+        _thrusterSlider.GetComponent<Slider>();
+        if (_thrusterSlider == null)
+        {
+            Debug.LogError("Thruster Slider Not Found");
+        }
+        _thrusterBar.GetComponent<Image>();
+        if (_thrusterBar == null)
+        {
+            Debug.LogError("Thruster Bar Not Found");
+        }
+        _thrusterSlider.value = _thrustersMax;
+        _thrusterText.text = "Thrusters: " + _thrusterSlider.value.ToString() + "%";
+        _thrusterTextShadow.text = "Thrusters: " + _thrusterSlider.value.ToString() + "%";
+        _thrusterBar.color = new Color32(26, 236, 19, 225);
+
         _pauseText.gameObject.SetActive(false);
         _pauseTextInfo.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -74,6 +104,38 @@ public class UIManager : MonoBehaviour
         _ammoText.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
         _ammoTextShadow.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
         return canFire;
+    }
+
+    private void Update()
+    {
+        if (_thrusterSlider.value > 60)
+        {
+            _thrusterBar.color = new Color32(26, 236, 19, 225);
+        } 
+        else if (_thrusterSlider.value > 30 && _thrusterSlider.value <= 60)
+        {
+            _thrusterBar.color = new Color32(236, 121, 19, 225);
+        }
+        else
+        {
+            _thrusterBar.color = new Color32(236, 50, 19, 225);
+        }
+    }
+
+    public bool ThrustersEnabled()
+    {
+        StartCoroutine(ThrustersCoroutine());
+        if (_thrusterSlider.value >= _thrustersCost)
+        {
+            _thrusterSlider.value -= _thrustersCost;
+            _thrusterText.text = "Thrusters: " + ((int)_thrusterSlider.value).ToString() + "%";
+            _thrusterTextShadow.text = "Thrusters: " + ((int)_thrusterSlider.value).ToString() + "%";
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void UpdateScore(int score)
@@ -137,6 +199,17 @@ public class UIManager : MonoBehaviour
     {
         _pauseText.gameObject.SetActive(false);
         _pauseTextInfo.gameObject.SetActive(false);
+    }
+    private IEnumerator ThrustersCoroutine()
+    {
+        while (_thrusterSlider.value < _thrustersMax)
+        {
+            yield return new WaitForSeconds(5f);
+            _thrusterSlider.value += _thrustersRegen;
+            _thrusterText.text = "Thrusters: " + ((int)_thrusterSlider.value).ToString() + "%";
+            _thrusterTextShadow.text = "Thrusters: " + ((int)_thrusterSlider.value).ToString() + "%";
+            yield return new WaitForSeconds(5f);
+        }
     }
 
     private IEnumerator GameOverCoroutine()

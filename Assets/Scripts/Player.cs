@@ -17,7 +17,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 3.5f;
     [SerializeField]
-    private int _speedMultiplier = 2;
+    private float _thrustMultiplier = 6f;
+    [SerializeField]
+    private int _speedMultiplier = 3;
     private AudioSource _audioSource;
     private Animator _animator;
     private CameraShake _cameraShake;
@@ -248,7 +250,15 @@ public class Player : MonoBehaviour
         float horizontalAxes = Input.GetAxis("Horizontal");
         float verticalAxes = Input.GetAxis("Vertical");
         Vector3 direction = new Vector3(horizontalAxes, verticalAxes, 0);
-        transform.Translate(direction * _speed * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.LeftShift) && _uiManager.ThrustersEnabled())
+        {
+            transform.Translate(direction * _speed * _thrustMultiplier * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
 
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
