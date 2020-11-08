@@ -51,6 +51,13 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void RestoreAmmo()
+    {
+        _ammoSlider.value = 15;
+        _ammoText.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
+        _ammoTextShadow.text = "Ammo: " + _ammoSlider.value.ToString() + "/15";
+    }
+
     public bool UpdateAmmo()
     {
         bool canFire = true;

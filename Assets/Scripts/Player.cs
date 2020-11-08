@@ -46,7 +46,6 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
@@ -167,6 +166,34 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5f);
         _speed /= _speedMultiplier;
+    }
+
+    public void AddHealth()
+    {
+        _lives++;
+        if (_lives > 3)
+        {
+            _lives = 3;
+        }
+        switch (_lives)
+        {
+            case 1:
+                _playerHurt[0].SetActive(false);
+                break;
+            case 2:
+                _playerHurt[1].SetActive(false);
+                break;
+            default:
+                _playerHurt[0].SetActive(false);
+                _playerHurt[1].SetActive(false);
+                break;
+        }
+        _uiManager.UpdateLives(_lives);
+    }
+
+    public void AddAmmo()
+    {
+        _uiManager.RestoreAmmo();
     }
 
     public void Damage()

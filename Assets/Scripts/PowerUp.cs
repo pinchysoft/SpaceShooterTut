@@ -40,6 +40,12 @@ public class PowerUp : MonoBehaviour
                     case 3:
                         player.SuperActive();
                         break;
+                    case 4:
+                        player.AddHealth();
+                        break;
+                    case 5:
+                        player.AddAmmo();
+                        break;
                     default:
                         Debug.LogError("Power Up ID Not Found");
                         break;
