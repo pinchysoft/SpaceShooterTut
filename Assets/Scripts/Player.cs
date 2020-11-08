@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     [SerializeField]
     private int _lives = 3;
+    private int _shieldLives = 0;
     [SerializeField]
     private bool _isImmortal; //for testing purposes ;)
     [SerializeField]
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("Audio Source (Player) Not Found");
         }
-        if (_audioSource == null)
+        if (_cameraShake == null)
         {
             Debug.LogError("Main Camera Not Found");
         }
@@ -136,6 +137,8 @@ public class Player : MonoBehaviour
 
     public void ShieldActive()
     {
+        _shieldLives = 3;
+        _uiManager.UpdateShields(_shieldLives);
         _audioSource.clip = _powerupSound;
         _audioSource.Play();
         _isShieldActive = true;
@@ -170,8 +173,19 @@ public class Player : MonoBehaviour
     {
         if (_isShieldActive)
         {
-            _isShieldActive = false;
-            _shieldObject.SetActive(false);
+            _shieldLives--;
+            _cameraShake.Shake();
+            switch (_shieldLives)
+            {
+                case 0:
+                    _uiManager.UpdateShields(_shieldLives);
+                    _isShieldActive = false;
+                    _shieldObject.SetActive(false);
+                    break;
+                default:
+                    _uiManager.UpdateShields(_shieldLives);
+                    break;
+            }
             return;
         }
         if (!_isImmortal)

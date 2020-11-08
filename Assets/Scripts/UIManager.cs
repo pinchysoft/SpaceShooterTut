@@ -74,6 +74,33 @@ public class UIManager : MonoBehaviour
         _playerScore.text = "Score: " + score.ToString();
     }
 
+    public void UpdateShields(int lives)
+    {
+        switch (lives)
+        {
+            case 1:
+                _shieldObjects[0].GetComponent<ShieldUI>().TurnOnShield();
+                _shieldObjects[1].GetComponent<ShieldUI>().TurnOffShield();
+                _shieldObjects[2].GetComponent<ShieldUI>().TurnOffShield();
+                break;
+            case 2:
+                _shieldObjects[0].GetComponent<ShieldUI>().TurnOnShield();
+                _shieldObjects[1].GetComponent<ShieldUI>().TurnOnShield();
+                _shieldObjects[2].GetComponent<ShieldUI>().TurnOffShield();
+                break;
+            case 3:
+                _shieldObjects[0].GetComponent<ShieldUI>().TurnOnShield();
+                _shieldObjects[1].GetComponent<ShieldUI>().TurnOnShield();
+                _shieldObjects[2].GetComponent<ShieldUI>().TurnOnShield();
+                break;
+            default:
+                _shieldObjects[0].GetComponent<ShieldUI>().TurnOffShield();
+                _shieldObjects[1].GetComponent<ShieldUI>().TurnOffShield();
+                _shieldObjects[2].GetComponent<ShieldUI>().TurnOffShield();
+                break;
+        }
+    }
+
     public void UpdateLives(int lives)
     {
         if (lives >= 0)
